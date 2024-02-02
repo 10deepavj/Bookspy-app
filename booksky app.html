@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Booksky</title>
+  <style>
+    *{
+      margin: 0%;
+      padding: 0%;
+    }
+    /* header */
+    #header{
+      background-color: #e9565d;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    h1{
+      padding: 1%;
+    }
+    /* content */
+    .container{
+      margin: 10px;
+      display: flex;
+      flex-direction: row;
+    }
+    #btn1{
+      width: 60px;
+      height: 25px;
+      background-color: red;
+      border-radius: 12px;
+      border: none;
+    } 
+    #btn1:hover{
+      cursor: pointer;
+    }
+    #content{
+      background-color: black;
+      border-radius: 10px;
+      margin: 3%;
+      display: flex;
+      flex-direction: column;
+      width: 25%;
+      padding: 1%;
+    }
+    #content h2{
+      color: #e9565d;
+    }
+    b{
+      color: white;
+    }
+    p{
+      color: rgb(201, 201, 201);
+    } 
+    /* upload  */
+    #upload{
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+      margin: 2%;
+      position: relative;
+      top: 50px;
+    }
+    #btn2{
+      width: 50px;
+      height: 50px;
+      border:none;
+      border-radius: 25px;
+      background-color: #e9565d;
+      font-size: 30px;
+    }
+    #btn2:hover{
+      cursor: pointer;
+    }
+    /* popup  */
+    #form{
+      background-color: #e9565d;
+      display: flex;
+      flex-direction: column;
+      margin: 2%;
+      padding: 2%;
+      width: 100%;
+      border-radius: 10px;
+    }
+    form{
+      text-align: center;
+    }
+    #title,#author{
+      background-color: #e9565d;
+      box-sizing: border-box;
+      border: none;
+      border-bottom: 2px solid black;
+    }
+    ::placeholder{
+      color: rgb(48, 48, 48);
+    }
+    textarea{
+      background-color: #e9565d;
+      border: none;
+      border: 1px solid black;
+      width: 95%;
+    }
+    .popup{
+      display: flex;
+      position: absolute;
+      left: 70%;
+      bottom: 15%;
+      display: none;
+    }
+    .popup input:focus{
+      outline: none;
+    }
+    .popup textarea:focus{
+      outline: none;
+    }
+    /* overlay */
+    .overlay{
+      background-color: black;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0%;
+      left: 0%;
+      opacity: 0.8;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  
+  <div id="header">
+    <h1>Booksky</h1>
+  </div>
+  <div class="container">
+    <div id="content">
+      <h2>Rich Dad Poor Dad</h2><br>
+      <b>Robert</b><br>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dicta, saepe officiis molestiae accusantium nihil neque nam et, alias repudiandae maiores laudantium. Facilis nulla labore recusandae repudiandae deleniti quod veritatis reprehenderit nobis exercitationem a modi corrupti numquam debitis neque mollitia voluptatum hic dignissimos placeat, molestiae, doloremque dolorem aperiam et? Animi.</p><br>
+      <button id="btn1" onclick="remove(event)">Delete</button>
+   </div>
+   
+  </div> 
+  <div class="overlay"></div>
+  <div class="popup">
+    <div id="form">
+    <form>
+      <h2>Add Book</h2><br>
+      <input id="title" type="text" placeholder="Book Title"><br><br>
+      <input id="author" type="text" placeholder="Book Author"><br><br>
+      <textarea id="text-area" type="text" placeholder="Short Description.."></textarea>
+      <button id="adding" style="margin: 5px; background-color: black;color: white;border: none;padding: 3px;">Add</button>
+      <button id="cancel" style="margin: 5px; background-color: black; color: white; border: none; padding: 3px;">Cancel</button>
+    </form> 
+    </div>
+  </div>
+  <div id="upload">
+    <button id="btn2" onclick="add()">+</button>
+  </div>
+
+  
+  <script>
+    var container=document.querySelector(".container")
+    var openform=document.querySelector(".overlay")
+    var pop=document.querySelector(".popup")
+    
+    function add(){
+      openform.style.display="block"
+      pop.style.display="block"
+    }
+    var adding=document.getElementById("adding")
+    var cancel=document.getElementById("cancel")
+    cancel.addEventListener("click",function(event){
+      event.preventDefault()
+      openform.style.display="none"
+      pop.style.display="none"
+    })
+    
+    // select popup, tilte, author, text-area
+    var popup=document.querySelector(".popup")
+    var title1=document.getElementById("title")
+    var author=document.getElementById("author")
+    var text=document.getElementById("text-area")
+
+    adding.addEventListener("click",function(){
+      event.preventDefault()
+      var div=document.createElement("div")
+      div.setAttribute("id","content")
+      div.innerHTML=`<h2>${title1.value}</h2><br>
+      <b>${author.value}</b><br>
+      <p>${text.value}</p><br>
+      <button id="btn1" onclick="remove(event)">Delete</button>`
+      container.append(div)
+      openform.style.display="none"
+      pop.style.display="none"
+    })
+    function remove(event){
+      event.target.parentElement.remove()
+    }
+  </script>
+</body>
+</html>
